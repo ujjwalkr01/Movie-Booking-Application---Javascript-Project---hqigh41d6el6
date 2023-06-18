@@ -41,18 +41,9 @@ const SEARCH_URL = baseUrl1 + "/search/movie?" + API;
 
 let listOfMovies = document.querySelector(".rows");
 
-//fetching the data from the api...
-// let genIdArr = [
-//   28, 12, 16, 35, 80, 99, 18, 10751, 14, 36, 27, 10402, 9648, 10749, 878, 10770,
-//   53, 10752, 37,
-// ];
 let countofFlag = 0;
 function loadingMovie(data, id = 0, isFlag = false) {
-  // console.log(data.results.length);
-  // console.log(data.results[0].id);
-  //console.log(data.results[5].genre_ids.slice(0, 1));
 
-  // console.log(countofFlag);
   if (isFlag && countofFlag === 0) {
     countofFlag++;
     listOfMovies.innerHTML = "";
@@ -84,7 +75,7 @@ const movieData = async function (url, id = 0, isFlag = false) {
     let filterArr = [];
     if (isFlag) {
       countofFlag = 0;
-      // filterArr.splice(0);
+  
       data.results.forEach((res) => {
         let idgen = [];
         idgen = res.genre_ids.slice(0, 1);
@@ -105,7 +96,6 @@ const movieData = async function (url, id = 0, isFlag = false) {
       loadingMovie(data, id);
       const idArr = data.results.map((el, ind) => el.id);
 
-      // console.log(idArr);
       movieDetail(idArr);
     }
 
@@ -140,8 +130,6 @@ async function movieDetail(idArr, isFlag = false) {
     for (let i = 0; i < idArr.length; i++) {
       var res = await fetch(`${baseUrl}${idArr[i]}?${API}`);
       var data = await res.json();
-      //console.log(data);
-      //  console.log(data.genres[0,1,2].name);
 
       if (!newArray.includes(data.id)) {
         newArray.push({
@@ -161,14 +149,13 @@ async function movieDetail(idArr, isFlag = false) {
     } else {
       heading.textContent = "Now Playing...";
     }
-    //console.log(newArray);
+
     movieOverview(newArray, true);
   } else {
     for (let i = 0; i < idArr.length; i++) {
       var res = await fetch(`${baseUrl}${idArr[i]}?${API}`);
       var data = await res.json();
-      // console.log(data);
-      //  console.log(data.genres[0,1,2].name);
+    
       if (!arr.includes(data.id)) {
         arr.push({
           id: data.id,
@@ -181,7 +168,7 @@ async function movieDetail(idArr, isFlag = false) {
         });
       }
     }
-    //console.log(arr);
+
     movieOverview(arr);
   }
 }
@@ -200,17 +187,16 @@ let searchBtn = document.getElementById("searchBtn");
 let onPaymentPage=false;
 function movieOverview(isFlag = false) {
   let movielist = document.querySelectorAll(".movie");
-  //console.log(movielist);
+
   // implementing the movie model window
   movielist.forEach((list, ind) => {
     list.addEventListener("click", function (e) {
       let price = Math.trunc(Math.random() * (300 - 250 + 1)) + 250;
       let poster = list.querySelector(".poster");
-      let title = list.querySelector(".title");
-      //console.log(title.textContent);
+      let title = list.querySelector(".title");    
       let lang = list.querySelector(".lang");
       let rating = list.querySelector(".rating");
-      // console.log();
+
       const markUp = `
        <div id="poster">
          <img src="${poster.getAttribute("src")}" alt="${title.textContent}" >
@@ -309,6 +295,7 @@ function movieOverview(isFlag = false) {
       </div>  
         `;
         mainDiv.innerHTML = payment;
+        
         //implementing the tax...
         let ticketInput = document.getElementById("noOfTicket");
         let cnvFee = document.getElementById("feePrice");
@@ -318,7 +305,6 @@ function movieOverview(isFlag = false) {
 
         cnvFee.textContent = "₹ " + convFee;
         noOfTicket.addEventListener("keydown", function (e) {
-          //  console.log(e.key);
           if (e.key === "Enter") {
             let notickt = parseInt(ticketInput.value);
             let taxCal = parseFloat((convFee * notickt).toFixed(2));
@@ -328,19 +314,22 @@ function movieOverview(isFlag = false) {
             totalamnt.textContent = `₹ ${ticketPrice + taxCal} `;
           }
         });
+        
         //Implementing the  back button functionality
         let backBtn = document.getElementById("btnBack");
         let paymentSect = document.getElementById("paymentSection");
         backBtn.addEventListener("click", function () {
           window.location.href = "index.html";
         });
+        
         let cardNumber=document.getElementById('card-number');
         let expDate=document.getElementById('expiration-date');
         let cvv=document.getElementById('cvv');
         let upi=document.getElementById('upi');
         let btnPay=document.getElementById('payBtn');
-        let thank_greet = document.getElementById("thank")
-
+        let thank_greet = document.getElementById("thank");
+        
+//implementing the proceed to pay Button
         btnPay.addEventListener('click',function(e){
           e.preventDefault();
           if((cardNumber.value.length===16 && expDate.value!="" && cvv.value.length===3) || (upi.vlaue!=='')){
@@ -366,9 +355,7 @@ function searchMovies() {
   var selectedGenre = [];
 
   const searchTerm = searchInp.value;
-  //console.log(arr);
-  // console.log(arr[0].title.toLowerCase().includes(searchTerm.toLowerCase()));
-  // console.log(searchTerm);
+
   if (searchTerm === "") {
     return;
   }
@@ -382,10 +369,6 @@ function searchMovies() {
     // console.log(ele.id);
     movieData(nowPlaying_url, ele.id, true);
   });
-  // console.log(selectedGenre);
-  // arr.forEach(ele=>{
-  //   console.log(ele.genre);
-  // })
 }
 //https://api.themoviedb.org/3/movie/385687?api_key=0ccf59483fedbdb430d11f784efcd6a0
 let count = 0;
@@ -435,39 +418,8 @@ genre.forEach((ele) => {
   });
 });
 
-//function to implement the form validation of the payment
-/* <label for="card-number">Card Number:</label>
-                  <input type="text" id="card-number" name="card-number" required>
-  
-                  <label for="expiration-date">Expiration Date:</label>
-                  <input type="date" id="expiration-date" name="expiration-date" required>
-  
-                  <label for="cvv">CVV:</label>
-                  <input type="text" id="cvv" name="cvv" required>
-                  <h2>UPI</h2>
-                  <label for="upi">Upi Id </label>
-                  <input type="text" id="upi" name="upi">
-  
-                  <input style="margin-top: 10px;" type="checkbox" required>
-                  <span>Please read <span style="color: blue;  text-decoration: underline;">terms and condition</span>
-                  </span>
-  
-                  <button id="payBtn" type="submit">Pay Now</button> */
 
-// let cardNumber=document.getElementById('card-number');
-// let expDate=document.getElementById('expiration-date');
-// let cvv=document.getElementById('cvv');
-// let upi=document.getElementById('upi');
-// let btnPay=document.getElementById('payBtn');
-// let checkbox=document.querySelector(".check")
-
-// btnPay.addEventListener('click',function(e){
-//   e.preventDefault();
-//   if((cardNumber.value.length===16 && expDate.value!="" && cvv.value.length===3) || (upi.vlaue!=='')){
-//     console.log('passed')
-//   }
-// })
-let btnSign=document.getElementById('btnSign');
-btnSign.addEventListener('click',function(){
-  window.location.href="LogIn.html";
-});
+// let btnSign=document.getElementById('btnSign');
+// btnSign.addEventListener('click',function(){
+//   window.location.href="LogIn.html";
+// });
