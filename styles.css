@@ -7,22 +7,22 @@ body {
   height: 3.5rem;
   padding: 1.5rem 1rem;
 }
-#navDiv {
+#navDiv{
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-#logo {
+#logo{
   margin-left: 2rem;
   cursor: pointer;
-  height: 75px;
-  width: 120px;
+  height:75px;
+  width:120px;
 }
 #navbar a {
   color: rgb(240, 116, 116);
   font-family: inherit;
-  /* margin-left: 2rem; */
-  font-size: 1rem;
+  margin-left: 2rem;
+  font-size: 1.2rem;
   text-decoration: none;
 }
 #searchBox {
@@ -31,10 +31,11 @@ body {
   font-size: 1.2rem;
   border-radius: 4px;
   border: none;
+  margin-left: 4rem;
   padding: 0 1rem;
 }
 
-#btnSign {
+#btn {
   height: 2.5rem;
   width: 6rem;
   border-radius: 4px;
@@ -110,25 +111,21 @@ body {
     opacity: 1;
   }
 }
-
+ 
 /* Movie list section */
-.movie {
-  width: 100%;
-  height: 440px;
+.movie{
+  width: 300px;
+  height: 450px;
   border-radius: 8px;
 }
-.movie img {
-  margin: 2%;
-  width: 96%;
-  height: 300px;
+.movie img{
+  margin: 2.5%;
+  width: 94%;
+  height: 320px;
 }
-
 .movie:hover {
   transform: scale(1.05);
   transition: 0.5s ease all;
-}
-#listMovie {
-  padding: 10px;
 }
 .hdng {
   margin-left: 2rem;
@@ -142,24 +139,24 @@ body {
   margin: 0;
 }
 .rows > div {
-  background-color: rgb(3, 3, 3);
+  background-color: black;
   color: #717171;
   font-size: 1.2rem;
   cursor: pointer;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
-    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  padding: 5px;
+  /* text-align: center; */
 }
-.rows h4 {
+.rows > div > h4 {
   margin-top: 10px;
   text-align: center;
 }
 
-.rows .lang {
+.rows > div > span:nth-last-child(2) {
   margin-left: 20px;
   color: #fff;
 }
-.rows .rating {
+.rows > div > span:last-child {
   margin-left: 180px;
   font-weight: bold;
 }
@@ -169,19 +166,25 @@ body {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
   }
-  #searchBox {
-    width: 100px;
+  #searchBox{
+     width: 100px;
+     margin-left: 5px;
   }
-  #logo {
+  #navDiv a{
+    margin:0 10px;
+  }
+  #logo{
     width: 50px;
     margin-left: 0;
   }
-  .movie {
-    margin-left: 18px;
+  .movie{
+    /* width: 98%; */
+    margin-left: 42px;
   }
-  .moviedetails {
+  .moviedetails{
     display: none;
   }
+
 }
 
 /* Footer Section */
@@ -290,7 +293,7 @@ footer {
   width: 45%;
   height: 480px;
   background-color: rgb(0, 0, 0);
-  color: #d3d0d0;
+  color: #d3d0d0;  
 }
 
 #window {
@@ -307,30 +310,29 @@ footer {
   height: 250px;
   width: 150px;
 }
-#poster p {
+#poster p{
   text-align: center;
   color: rgb(121, 202, 29);
   font-weight: bold;
 }
 
-.moviedetails h2 {
+.moviedetails h2{
   color: orangered;
 }
-.moviedetails .rating {
+.moviedetails .rating{
   font-family: inherit;
   font-weight: bold;
   font-size: 16px;
 }
-.moviedetails > p:nth-child(3),
-.moviedetails > p:nth-child(4) {
+.moviedetails>p:nth-child(3),.moviedetails>p:nth-child(4){
   color: #5c5c5c;
   font-weight: bold;
   font-size: 15px;
 }
-.moviedetails > p:nth-child(5) {
+.moviedetails>p:nth-child(5){
   font-size: 18px;
 }
-#bookTicketbtn {
+#bookTicketbtn{
   border: none;
   background-color: rgb(243, 80, 80);
   padding: 12px;
@@ -339,7 +341,7 @@ footer {
   border-radius: 6px;
   margin-top: 10px;
 }
-#bookTicketbtn:hover {
+#bookTicketbtn:hover{
   cursor: pointer;
   border: 1px solid #cecccc;
 }
@@ -357,33 +359,37 @@ footer {
   transform: translate(-50%, -50%);
   box-shadow: 0 4rem 6rem #00000040;
 }
-@media screen and (min-width: 481px) and (max-width: 1055px) {
+@media screen and (min-width:481px) and (max-width: 1055px) {
   .rows {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-  }
+     display: grid;
+     grid-template-columns: repeat(2, 1fr);
+   }
+   #logo{
+     width: 40px;
+   }
+   .movie{
+     width: 98%;
+     margin-left: 14px;
+   }
 
-  #logo {
-    width: 40px;
-  }
-  .movie {
-    width: 98%;
-  }
-  #movieOverview {
-    width: 90%;
-    height: 580px;
-  }
-  #searchBox {
-    width: 25rem;
+   #movieOverview{
+    width: 80%;
+    height: 500px;
+   }
+   #searchBox {
+    width: 15rem;
     height: 3rem;
-    /* padding: 0 1rem; */
   }
-  .rows .rating {
-    margin-left: 150px;
-    font-weight: bold;
+  .rows > div > span:last-child {
+    margin-left: 200px;
   }
-}
 
+  #navDiv a{
+    margin-left: 0;
+  }
+
+ } 
+ 
 /* .overlay {
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
@@ -452,9 +458,9 @@ input[type="text"] {
   border: 1px solid #ccc;
 }
 #expiration-date {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
 }
 
 #payBtn {
@@ -483,43 +489,45 @@ input[type="text"] {
 }
 
 #container {
-  padding: 10px;
-  width: 70%;
-  margin: auto;
-  border-radius: 6px;
-  /* display: flex;
+    padding: 10px;
+    width: 70%;
+    margin:auto;
+    border-radius: 6px;
+    /* display: flex;
     flex-wrap: wrap; */
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
-    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-  color: #ccc;
-  background-color: #2e2e2e;
-}
-#form1 {
-  flex: 1 1 300px;
-}
-#form1 > :nth-child(3) > span {
-  /* font-size: 2rem; */
-  color: rgb(24, 139, 24);
-  margin-left: 70%;
-}
-#form1 > :nth-child(5) > span {
-  color: rgb(24, 139, 24);
-  margin-left: 62%;
-}
-#form1 > :nth-child(7) > span {
-  color: rgb(24, 139, 24);
-  margin-left: 73%;
-}
-#noOfTicket {
-  color: black;
-  margin-left: 63%;
-  width: 10%;
-  height: 35px;
-}
-#form1 p {
-  font-size: 18px;
-  font-weight: bold;
-}
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    color: #ccc;
+    background-color: #2e2e2e;
+
+  }
+  #form1{
+    flex: 1 1 300px;
+  }
+  #form1>:nth-child(3)>span{
+    /* font-size: 2rem; */
+    color: rgb(24, 139, 24);
+    margin-left: 70%;
+    
+  }
+  #form1>:nth-child(5)>span{
+    color: rgb(24, 139, 24);
+    margin-left: 62%;
+  }
+  #form1>:nth-child(7)>span{
+    color: rgb(24, 139, 24);
+    margin-left: 73%;
+  }
+  #noOfTicket{
+    color: black;
+    margin-left: 63%;
+    width: 10%;
+    height: 35px;
+  }
+  #form1 p{
+    font-size: 18px;
+    font-weight: bold;
+  }
+
 
 @media screen and (max-width: 750px) {
   .payment-container:nth-child(2) {
@@ -542,7 +550,7 @@ input[type="text"] {
     width: 50px;
   }
 }
-#btnBack {
+#btnBack{
   background-color: rgb(253, 119, 119);
   border-radius: 4px;
   border: none;

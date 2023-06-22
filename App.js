@@ -1,4 +1,3 @@
-// import { isFlag } from "./LogIn.js";
 let slideIndex = 0;
 showSlides();
 
@@ -21,9 +20,7 @@ function showSlides() {
   setTimeout(showSlides, 4000);
 }
 
-//implementing the login..
 
-// fetching the data from the api...
 const API = "api_key=0ccf59483fedbdb430d11f784efcd6a0";
 const baseUrl = "https://api.themoviedb.org/3/movie/";
 const baseUrl1 = "https://api.themoviedb.org/3";
@@ -42,17 +39,13 @@ const SEARCH_URL = baseUrl1 + "/search/movie?" + API;
 
 let listOfMovies = document.querySelector(".rows");
 
-<<<<<<< HEAD
-//fetching the data from the api...
+/*.... fetching the data from the api...*/
 
 let countofFlag = 0;
 function loadingMovie(data, id = 0, isFlag = false) {
-  // console.log(countofFlag);
-=======
-let countofFlag = 0;
-function loadingMovie(data, id = 0, isFlag = false) {
+  // console.log(data.results.length);
+  // console.log(data.results[0].id);
 
->>>>>>> e53cf833e43a93c938387f5fee8599143712ea88
   if (isFlag && countofFlag === 0) {
     countofFlag++;
     listOfMovies.innerHTML = "";
@@ -60,7 +53,6 @@ function loadingMovie(data, id = 0, isFlag = false) {
   data.results.forEach((res) => {
     if (id === 0 || res.id === id) {
       const markUp = `
-      
       <div class="movie">
       <img class="poster" src="${imgUrl}${res.poster_path}" alt="${
         res.original_title
@@ -69,7 +61,6 @@ function loadingMovie(data, id = 0, isFlag = false) {
       <span class="lang">${res.original_language.toUpperCase()}</span>
       <span class="rating">&star; ${res.vote_average}</span>
     </div>
-    
       `;
 
       listOfMovies.insertAdjacentHTML("beforeend", markUp);
@@ -85,7 +76,7 @@ const movieData = async function (url, id = 0, isFlag = false) {
     let filterArr = [];
     if (isFlag) {
       countofFlag = 0;
-  
+      // filterArr.splice(0);
       data.results.forEach((res) => {
         let idgen = [];
         idgen = res.genre_ids.slice(0, 1);
@@ -106,6 +97,7 @@ const movieData = async function (url, id = 0, isFlag = false) {
       loadingMovie(data, id);
       const idArr = data.results.map((el, ind) => el.id);
 
+      // console.log(idArr);
       movieDetail(idArr);
     }
 
@@ -118,7 +110,8 @@ const movieData = async function (url, id = 0, isFlag = false) {
 };
 movieData(nowPlaying_url);
 
-//changing the rating color
+/*......implementing changing the rating color.......*/
+
 function changeRatingColor() {
   let rating = document.querySelectorAll(".rating");
 
@@ -159,17 +152,14 @@ async function movieDetail(idArr, isFlag = false) {
     } else {
       heading.textContent = "Now Playing...";
     }
-
+    //console.log(newArray);
     movieOverview(newArray, true);
   } else {
     for (let i = 0; i < idArr.length; i++) {
       var res = await fetch(`${baseUrl}${idArr[i]}?${API}`);
       var data = await res.json();
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> e53cf833e43a93c938387f5fee8599143712ea88
+      // console.log(data);
+      //  console.log(data.genres[0,1,2].name);
       if (!arr.includes(data.id)) {
         arr.push({
           id: data.id,
@@ -182,12 +172,13 @@ async function movieDetail(idArr, isFlag = false) {
         });
       }
     }
-
+    //console.log(arr);
     movieOverview(arr);
   }
 }
 
-//implementing the movie description.....
+/*....implementing the movie description.....*/
+
 const overview = document.querySelector(".overview-window");
 const windowDiv = document.querySelector("#window");
 const btnClose = document.querySelector(".btn--close-modal");
@@ -201,21 +192,19 @@ let searchBtn = document.getElementById("searchBtn");
 let onPaymentPage = false;
 function movieOverview(isFlag = false) {
   let movielist = document.querySelectorAll(".movie");
+  //console.log(movielist);
+  
+  /*.... implementing the movie model window....*/
 
-  // implementing the movie model window
   movielist.forEach((list, ind) => {
     list.addEventListener("click", function (e) {
       let price = Math.trunc(Math.random() * (300 - 250 + 1)) + 250;
       let poster = list.querySelector(".poster");
-<<<<<<< HEAD
       let title = list.querySelector(".title");
-
-=======
-      let title = list.querySelector(".title");    
->>>>>>> e53cf833e43a93c938387f5fee8599143712ea88
+      //console.log(title.textContent);
       let lang = list.querySelector(".lang");
       let rating = list.querySelector(".rating");
-
+      // console.log();
       const markUp = `
        <div id="poster">
          <img src="${poster.getAttribute("src")}" alt="${title.textContent}" >
@@ -248,7 +237,6 @@ function movieOverview(isFlag = false) {
         overview.classList.add("hidden");
         offerBar.classList.add("hidden");
         searchInp.classList.add("hidden");
-        searchBtn.classList.add("hidden");
         let convFee = parseFloat(((price * 1.75) / 100).toFixed(2));
 
         const payment = `
@@ -292,8 +280,8 @@ function movieOverview(isFlag = false) {
                   <label for="cvv">CVV:</label>
                   <input type="text" id="cvv" name="cvv" required>
                   <h2>UPI</h2>
-                  <label for="cvv">Upi Id </label>
-                  <input type="text" id="cvv" name="cvv">
+                  <label for="upi">Upi Id </label>
+                  <input type="text" id="upi" name="cvv">
   
                   <input class="check" style="margin-top: 10px;" type="checkbox" required>
                   <span>Please read <span style="color: blue;  text-decoration: underline;">terms and condition</span>
@@ -314,33 +302,36 @@ function movieOverview(isFlag = false) {
       </div>  
         `;
         mainDiv.innerHTML = payment;
-        
         //implementing the tax...
         let ticketInput = document.getElementById("noOfTicket");
         let cnvFee = document.getElementById("feePrice");
         let totalamnt = document.getElementById("totalamnt");
         let perTicktPrice = document.getElementById("perTickt");
         totalamnt.textContent = `₹ ${price + Number(convFee)} `;
-
         cnvFee.textContent = "₹ " + convFee;
-        noOfTicket.addEventListener("keydown", function (e) {
-          if (e.key === "Enter") {
-            let notickt = parseInt(ticketInput.value);
-            let taxCal = parseFloat((convFee * notickt).toFixed(2));
-            let ticketPrice = price * notickt;
-            perTicktPrice.textContent = "₹ " + ticketPrice;
-            cnvFee.textContent = "₹ " + taxCal;
-            totalamnt.textContent = `₹ ${ticketPrice + taxCal} `;
+
+        function calculatingTheTax(notickt) {
+          let taxCal = parseFloat((convFee * notickt).toFixed(2));
+          let ticketPrice = price * notickt;
+          perTicktPrice.textContent = "₹ " + ticketPrice;
+          cnvFee.textContent = "₹ " + taxCal;
+          totalamnt.textContent = `₹ ${ticketPrice + taxCal} `;
+        }
+        noOfTicket.addEventListener("input", function (e) {
+          let notickt = parseInt(ticketInput.value);
+          calculatingTheTax(notickt);
+
+          if (noOfTicket.value === "" || noOfTicket.value == 0) {
+            calculatingTheTax(1);
           }
+    
         });
-        
-        //Implementing the  back button functionality
+        /*Implementing the  back button functionality*/
         let backBtn = document.getElementById("btnBack");
         let paymentSect = document.getElementById("paymentSection");
         backBtn.addEventListener("click", function () {
           window.location.href = "index.html";
         });
-<<<<<<< HEAD
         let cardNumber = document.getElementById("card-number");
         let expDate = document.getElementById("expiration-date");
         let cvv = document.getElementById("cvv");
@@ -349,18 +340,6 @@ function movieOverview(isFlag = false) {
         let thank_greet = document.getElementById("thank");
 
         btnPay.addEventListener("click", function (e) {
-=======
-        
-        let cardNumber=document.getElementById('card-number');
-        let expDate=document.getElementById('expiration-date');
-        let cvv=document.getElementById('cvv');
-        let upi=document.getElementById('upi');
-        let btnPay=document.getElementById('payBtn');
-        let thank_greet = document.getElementById("thank");
-        
-//implementing the proceed to pay Button
-        btnPay.addEventListener('click',function(e){
->>>>>>> e53cf833e43a93c938387f5fee8599143712ea88
           e.preventDefault();
           if (
             (cardNumber.value.length === 16 &&
@@ -370,10 +349,10 @@ function movieOverview(isFlag = false) {
           ) {
             thank_greet.textContent = `Booking Sucessfull ! Enjoy  your movie with Booking Id : BK127894`;
             thank_greet.style.opacity = 1;
-
-            setTimeout(() => {
-              window.location.href = "index.html";
-            }, 8000);
+            alert(`Booking Successfull! Scroll down to check your booking id!`)
+            // setTimeout(() => {
+            //   window.location.href = "index.html";
+            // }, 10000);
           }
         });
       });
@@ -390,7 +369,6 @@ function searchMovies() {
   var selectedGenre = [];
 
   const searchTerm = searchInp.value;
-
   if (searchTerm === "") {
     return;
   }
@@ -401,43 +379,44 @@ function searchMovies() {
   });
   listOfMovies.innerHTML = "";
   selectedGenre.forEach((ele) => {
+    // console.log(ele.id);
     movieData(nowPlaying_url, ele.id, true);
   });
 }
-//https://api.themoviedb.org/3/movie/385687?api_key=0ccf59483fedbdb430d11f784efcd6a0
-// let count = 0;
-// searchBtn.addEventListener("click", (e) => {
-//   if (count === 0) {
-//     e.preventDefault();
-//     searchMovies();
-//   }
-//   count++;
-// });
+
+/*..........implementing the search function........*/
+
 searchInp.addEventListener("input", function (e) {
   if (searchInp.value === "") {
     window.location.href = "index.html";
   }
+  e.preventDefault();
   searchMovies();
 });
 
-//implementing the movie genre.....
+/*......implementing the movie genre.....*/
+
 let genre = document.querySelectorAll(".genre");
 
 let genreArr = [];
 // console.log(genre)
 async function getMovieGenre(genreName) {
+  try{
   const res = await fetch(
     "https://api.themoviedb.org/3/genre/movie/list?api_key=0ccf59483fedbdb430d11f784efcd6a0"
   );
   const data = await res.json();
 
+
   data.genres.forEach((ele) => {
-    //console.log(ele)
     if (ele.name.includes(genreName)) {
       //console.log(ele.id);
       movieData(nowPlaying_url, ele.id, true);
     }
   });
+ }catch(err){
+  console.error(err);
+ }
 }
 getMovieGenre();
 
@@ -448,17 +427,9 @@ genre.forEach((ele) => {
   });
 });
 
-<<<<<<< HEAD
-let btnSign = document.getElementById("btnSign");
+
+/*.......implementing the logIn functionality......... */
+let btnSign = document.getElementById("btn");
 btnSign.addEventListener("click", function () {
-  //console.log('hi');
   window.location.href = "LogIn.html";
 });
-// console.log(isFlag);
-=======
-
-// let btnSign=document.getElementById('btnSign');
-// btnSign.addEventListener('click',function(){
-//   window.location.href="LogIn.html";
-// });
->>>>>>> e53cf833e43a93c938387f5fee8599143712ea88
