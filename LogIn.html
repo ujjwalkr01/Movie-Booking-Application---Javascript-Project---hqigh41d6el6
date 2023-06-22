@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogIn/SignUp Form</title>
+    <link rel="styleSheet" href="LogIn.css">
+</head>
+<body>
+<main>    
+    <!-- Login section -->
+    <div class="logInForm">
+        <h1>Log In</h1>
+        <input type="text" class="username" placeholder="Email/Mobile Number" required><br>
+       <input type="password" class="password" placeholder="Password" required><br>
+       <button type="submit" class="btn_login">Log In</button>
+       <h3>Not a member? <button class="signUp">Sign Up</button></h3>
+    </div>
+    <!-- SignUp section -->
+    <div class="signInForm hidden">
+        <h1>Sign-Up</h1>
+        
+        <h3>Already a member? <button class="login">Log in</button></h3>
+        <input type="text" class="frstName" placeholder="Username" required>
+        <!-- <input type="text" class="lastName" placeholder="Last name" required><br> -->
+        <input type="email" class="email" required placeholder="Email"><br>
+        <input type="password" class="passwrd" placeholder="Password" required><br>
+        <input type="tel" class="phoneNum" placeholder="Mobile number" required><br>
+        <button type="submit" class="btn_signup">Sign Up</button>
+
+    </div>
+
+</main>
+ 
+</body>
+</html>
+<script type="module" src="LogIn.js"></script>

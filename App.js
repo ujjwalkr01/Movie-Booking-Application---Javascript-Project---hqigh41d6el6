@@ -1,3 +1,4 @@
+// import { isFlag } from "./LogIn.js";
 let slideIndex = 0;
 showSlides();
 
@@ -42,16 +43,9 @@ const SEARCH_URL = baseUrl1 + "/search/movie?" + API;
 let listOfMovies = document.querySelector(".rows");
 
 //fetching the data from the api...
-// let genIdArr = [
-//   28, 12, 16, 35, 80, 99, 18, 10751, 14, 36, 27, 10402, 9648, 10749, 878, 10770,
-//   53, 10752, 37,
-// ];
+
 let countofFlag = 0;
 function loadingMovie(data, id = 0, isFlag = false) {
-  // console.log(data.results.length);
-  // console.log(data.results[0].id);
-  //console.log(data.results[5].genre_ids.slice(0, 1));
-
   // console.log(countofFlag);
   if (isFlag && countofFlag === 0) {
     countofFlag++;
@@ -60,6 +54,7 @@ function loadingMovie(data, id = 0, isFlag = false) {
   data.results.forEach((res) => {
     if (id === 0 || res.id === id) {
       const markUp = `
+      
       <div class="movie">
       <img class="poster" src="${imgUrl}${res.poster_path}" alt="${
         res.original_title
@@ -68,10 +63,10 @@ function loadingMovie(data, id = 0, isFlag = false) {
       <span class="lang">${res.original_language.toUpperCase()}</span>
       <span class="rating">&star; ${res.vote_average}</span>
     </div>
+    
       `;
 
       listOfMovies.insertAdjacentHTML("beforeend", markUp);
-
     }
   });
 }
@@ -167,8 +162,7 @@ async function movieDetail(idArr, isFlag = false) {
     for (let i = 0; i < idArr.length; i++) {
       var res = await fetch(`${baseUrl}${idArr[i]}?${API}`);
       var data = await res.json();
-      // console.log(data);
-      //  console.log(data.genres[0,1,2].name);
+
       if (!arr.includes(data.id)) {
         arr.push({
           id: data.id,
@@ -181,7 +175,7 @@ async function movieDetail(idArr, isFlag = false) {
         });
       }
     }
-    //console.log(arr);
+
     movieOverview(arr);
   }
 }
@@ -197,20 +191,20 @@ const offerBar = document.getElementById("p-container");
 let main = document.getElementById("mainContainer");
 let searchInp = document.getElementById("searchBox");
 let searchBtn = document.getElementById("searchBtn");
-let onPaymentPage=false;
+let onPaymentPage = false;
 function movieOverview(isFlag = false) {
   let movielist = document.querySelectorAll(".movie");
-  //console.log(movielist);
+
   // implementing the movie model window
   movielist.forEach((list, ind) => {
     list.addEventListener("click", function (e) {
       let price = Math.trunc(Math.random() * (300 - 250 + 1)) + 250;
       let poster = list.querySelector(".poster");
       let title = list.querySelector(".title");
-      //console.log(title.textContent);
+
       let lang = list.querySelector(".lang");
       let rating = list.querySelector(".rating");
-      // console.log();
+
       const markUp = `
        <div id="poster">
          <img src="${poster.getAttribute("src")}" alt="${title.textContent}" >
@@ -334,22 +328,27 @@ function movieOverview(isFlag = false) {
         backBtn.addEventListener("click", function () {
           window.location.href = "index.html";
         });
-        let cardNumber=document.getElementById('card-number');
-        let expDate=document.getElementById('expiration-date');
-        let cvv=document.getElementById('cvv');
-        let upi=document.getElementById('upi');
-        let btnPay=document.getElementById('payBtn');
-        let thank_greet = document.getElementById("thank")
+        let cardNumber = document.getElementById("card-number");
+        let expDate = document.getElementById("expiration-date");
+        let cvv = document.getElementById("cvv");
+        let upi = document.getElementById("upi");
+        let btnPay = document.getElementById("payBtn");
+        let thank_greet = document.getElementById("thank");
 
-        btnPay.addEventListener('click',function(e){
+        btnPay.addEventListener("click", function (e) {
           e.preventDefault();
-          if((cardNumber.value.length===16 && expDate.value!="" && cvv.value.length===3) || (upi.vlaue!=='')){
+          if (
+            (cardNumber.value.length === 16 &&
+              expDate.value != "" &&
+              cvv.value.length === 3) ||
+            upi.vlaue !== ""
+          ) {
             thank_greet.textContent = `Booking Sucessfull ! Enjoy  your movie with Booking Id : BK127894`;
-            thank_greet.style.opacity = 1
+            thank_greet.style.opacity = 1;
 
-            setTimeout(()=>{
-              window.location.href="index.html";
-            },6000);
+            setTimeout(() => {
+              window.location.href = "index.html";
+            }, 8000);
           }
         });
       });
@@ -366,9 +365,7 @@ function searchMovies() {
   var selectedGenre = [];
 
   const searchTerm = searchInp.value;
-  //console.log(arr);
-  // console.log(arr[0].title.toLowerCase().includes(searchTerm.toLowerCase()));
-  // console.log(searchTerm);
+
   if (searchTerm === "") {
     return;
   }
@@ -379,29 +376,23 @@ function searchMovies() {
   });
   listOfMovies.innerHTML = "";
   selectedGenre.forEach((ele) => {
-    // console.log(ele.id);
     movieData(nowPlaying_url, ele.id, true);
   });
-  // console.log(selectedGenre);
-  // arr.forEach(ele=>{
-  //   console.log(ele.genre);
-  // })
 }
 //https://api.themoviedb.org/3/movie/385687?api_key=0ccf59483fedbdb430d11f784efcd6a0
-let count = 0;
-searchBtn.addEventListener("click", (e) => {
-  if (count === 0) {
-    e.preventDefault();
-    searchMovies();
-  }
-  count++;
-});
-searchInp.addEventListener("keydown", function (e) {
-  if (e.key === "Backspace") {
-    console.log(e.key);
-    count = 0;
+// let count = 0;
+// searchBtn.addEventListener("click", (e) => {
+//   if (count === 0) {
+//     e.preventDefault();
+//     searchMovies();
+//   }
+//   count++;
+// });
+searchInp.addEventListener("input", function (e) {
+  if (searchInp.value === "") {
     window.location.href = "index.html";
   }
+  searchMovies();
 });
 
 //implementing the movie genre.....
@@ -415,9 +406,6 @@ async function getMovieGenre(genreName) {
   );
   const data = await res.json();
 
-  //console.log(data);
-  //console.log(data.genres[0].name)
-  // console.log(data.genres[0])
   data.genres.forEach((ele) => {
     //console.log(ele)
     if (ele.name.includes(genreName)) {
@@ -435,39 +423,9 @@ genre.forEach((ele) => {
   });
 });
 
-//function to implement the form validation of the payment
-/* <label for="card-number">Card Number:</label>
-                  <input type="text" id="card-number" name="card-number" required>
-  
-                  <label for="expiration-date">Expiration Date:</label>
-                  <input type="date" id="expiration-date" name="expiration-date" required>
-  
-                  <label for="cvv">CVV:</label>
-                  <input type="text" id="cvv" name="cvv" required>
-                  <h2>UPI</h2>
-                  <label for="upi">Upi Id </label>
-                  <input type="text" id="upi" name="upi">
-  
-                  <input style="margin-top: 10px;" type="checkbox" required>
-                  <span>Please read <span style="color: blue;  text-decoration: underline;">terms and condition</span>
-                  </span>
-  
-                  <button id="payBtn" type="submit">Pay Now</button> */
-
-// let cardNumber=document.getElementById('card-number');
-// let expDate=document.getElementById('expiration-date');
-// let cvv=document.getElementById('cvv');
-// let upi=document.getElementById('upi');
-// let btnPay=document.getElementById('payBtn');
-// let checkbox=document.querySelector(".check")
-
-// btnPay.addEventListener('click',function(e){
-//   e.preventDefault();
-//   if((cardNumber.value.length===16 && expDate.value!="" && cvv.value.length===3) || (upi.vlaue!=='')){
-//     console.log('passed')
-//   }
-// })
-let btnSign=document.getElementById('btnSign');
-btnSign.addEventListener('click',function(){
-  window.location.href="LogIn.html";
+let btnSign = document.getElementById("btnSign");
+btnSign.addEventListener("click", function () {
+  //console.log('hi');
+  window.location.href = "LogIn.html";
 });
+// console.log(isFlag);
