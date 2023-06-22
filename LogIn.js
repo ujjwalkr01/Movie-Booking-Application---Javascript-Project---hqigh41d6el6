@@ -46,6 +46,9 @@ btn_signup.addEventListener("click", function () {
     p.textContent = "✅Account created successfull !";
     signupForm.append(p);
     console.log(this.fstname);
+    setTimeout(()=>{
+      window.location.assign("index.html");
+    },3000);
   }
 });
 
@@ -63,7 +66,7 @@ btn_login.addEventListener("click", function () {
       loginpass.value === arr[i].paswrd
     ) {
       isvalid = true;
-      displayMessage(`Welcome back, ${arr[i].fstname} ${arr[i].lstname} !`);
+      displayMessage(`Welcome back, ${arr[i].fstname}!`);
       setTimeout(() => {
          isFlag=true;
          console.log(isFlag);
