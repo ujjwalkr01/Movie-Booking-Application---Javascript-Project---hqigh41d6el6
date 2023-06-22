@@ -148,7 +148,7 @@ async function movieDetail(idArr, isFlag = false) {
     }
     if (newArray.length === 0) {
       listOfMovies.innerHTML = "";
-      heading.textContent = "Coming soon...";
+      heading.textContent = "No results...";
     } else {
       heading.textContent = "Now Playing...";
     }
@@ -302,7 +302,9 @@ function movieOverview(isFlag = false) {
       </div>  
         `;
         mainDiv.innerHTML = payment;
-        //implementing the tax...
+
+        /*...implementing the tax...*/
+
         let ticketInput = document.getElementById("noOfTicket");
         let cnvFee = document.getElementById("feePrice");
         let totalamnt = document.getElementById("totalamnt");
@@ -347,7 +349,10 @@ function movieOverview(isFlag = false) {
               cvv.value.length === 3) ||
             upi.vlaue !== ""
           ) {
-            thank_greet.textContent = `Booking Sucessfull ! Enjoy  your movie with Booking Id : BK127894`;
+            var minm = 100000;
+			      var maxm = 999999;
+            thank_greet.textContent = `Booking Sucessfull ! Enjoy  your movie with Booking Id : BK${ Math.floor(Math
+              .random() * (maxm - minm + 1)) + minm}`;
             thank_greet.style.opacity = 1;
             alert(`Booking Successfull! Scroll down to check your booking id!`)
             // setTimeout(() => {
