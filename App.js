@@ -20,7 +20,6 @@ function showSlides() {
   setTimeout(showSlides, 4000);
 }
 
-
 const API = "api_key=0ccf59483fedbdb430d11f784efcd6a0";
 const baseUrl = "https://api.themoviedb.org/3/movie/";
 const baseUrl1 = "https://api.themoviedb.org/3";
@@ -76,18 +75,12 @@ const movieData = async function (url, id = 0, isFlag = false) {
     let filterArr = [];
     if (isFlag) {
       countofFlag = 0;
-      // filterArr.splice(0);
       data.results.forEach((res) => {
         let idgen = [];
         idgen = res.genre_ids.slice(0, 1);
         if (idgen.includes(id)) {
-          console.log(res.id, res.original_title);
+          // console.log(res.id, res.original_title);
           loadingMovie(data, res.id, true);
-          filterArr.push(res.id);
-          console.log(filterArr, "hi");
-        }
-        if (res.id === id) {
-          loadingMovie(data, res.id);
           filterArr.push(res.id);
         }
       });
@@ -124,55 +117,69 @@ function changeRatingColor() {
   });
 }
 
+/*....Implementing the movie details.....*/
+
 let arr = [];
 let newArray = [];
 let heading = document.querySelector(".hdng");
-async function movieDetail(idArr, isFlag = false) {
+
+function pushMovieDetails(data, isFlag = false) {
   if (isFlag) {
-    newArray = [];
-    for (let i = 0; i < idArr.length; i++) {
+    if (!newArray.includes(data.id)) {
+      newArray.push({
+        id: data.id,
+        duration: data.runtime,
+        genre: data.genres[0].name,
+        overview: data.overview,
+        title: data.original_title,
+        language: data.original_language,
+        rating: data.vote_average,
+        poster: data.poster_path,
+      });
+    }
+  } else {
+    if (!arr.includes(data.id)) {
+      arr.push({
+        id: data.id,
+        duration: data.runtime,
+        genre: data.genres[0].name,
+        overview: data.overview,
+        title: data.original_title,
+        language: data.original_language,
+        rating: data.vote_average,
+        poster: data.poster_path,
+      });
+    }
+  }
+}
+
+async function movieDetail(idArr, isFlag = false) {
+  newArray = [];
+  for (let i = 0; i < idArr.length; i++) {
+    try {
       var res = await fetch(`${baseUrl}${idArr[i]}?${API}`);
       var data = await res.json();
 
-      if (!newArray.includes(data.id)) {
-        newArray.push({
-          id: data.id,
-          duration: data.runtime,
-          genre: data.genres[0].name,
-          overview: data.overview,
-          title: data.original_title,
-          language: data.original_language,
-          rating: data.vote_average,
-        });
+      if (isFlag) {
+        pushMovieDetails(data, isFlag);
+      } else {
+        pushMovieDetails(data);
       }
+    } catch (err) {
+      console.error(err);
     }
+  }
+
+  if (isFlag) {
     if (newArray.length === 0) {
       listOfMovies.innerHTML = "";
       heading.textContent = "No results...";
     } else {
       heading.textContent = "Now Playing...";
     }
-    //console.log(newArray);
+    // console.log(newArray);
     movieOverview(newArray, true);
   } else {
-    for (let i = 0; i < idArr.length; i++) {
-      var res = await fetch(`${baseUrl}${idArr[i]}?${API}`);
-      var data = await res.json();
-      // console.log(data);
-      //  console.log(data.genres[0,1,2].name);
-      if (!arr.includes(data.id)) {
-        arr.push({
-          id: data.id,
-          duration: data.runtime,
-          genre: data.genres[0].name,
-          overview: data.overview,
-          title: data.original_title,
-          language: data.original_language,
-          rating: data.vote_average,
-        });
-      }
-    }
-    //console.log(arr);
     movieOverview(arr);
   }
 }
@@ -190,10 +197,11 @@ let main = document.getElementById("mainContainer");
 let searchInp = document.getElementById("searchBox");
 let searchBtn = document.getElementById("searchBtn");
 let onPaymentPage = false;
+
 function movieOverview(isFlag = false) {
   let movielist = document.querySelectorAll(".movie");
-  //console.log(movielist);
-  
+  // console.log(isFlag);
+
   /*.... implementing the movie model window....*/
 
   movielist.forEach((list, ind) => {
@@ -272,16 +280,16 @@ function movieOverview(isFlag = false) {
               <h2>Credit/Debit Card</h2>
               <form id="payment-form">
                   <label for="card-number">Card Number:</label>
-                  <input type="text" id="card-number" name="card-number" required>
+                  <input type="number" id="card-number" name="card-number" placeholder="Enter 16 digit card number" required>
   
                   <label for="expiration-date">Expiration Date:</label>
                   <input type="date" id="expiration-date" name="expiration-date" required>
   
                   <label for="cvv">CVV:</label>
-                  <input type="text" id="cvv" name="cvv" required>
+                  <input type="text" id="cvv" name="cvv" placeholder="Enter 3 digit cvv number" required>
                   <h2>UPI</h2>
                   <label for="upi">Upi Id </label>
-                  <input type="text" id="upi" name="cvv">
+                  <input type="text" id="upi" name="upi" placeholder="Enter the Upi number">
   
                   <input class="check" style="margin-top: 10px;" type="checkbox" required>
                   <span>Please read <span style="color: blue;  text-decoration: underline;">terms and condition</span>
@@ -326,9 +334,10 @@ function movieOverview(isFlag = false) {
           if (noOfTicket.value === "" || noOfTicket.value == 0) {
             calculatingTheTax(1);
           }
-    
         });
-        /*Implementing the  back button functionality*/
+
+        /*.....Implementing the  back button functionality....*/
+
         let backBtn = document.getElementById("btnBack");
         let paymentSect = document.getElementById("paymentSection");
         backBtn.addEventListener("click", function () {
@@ -343,22 +352,22 @@ function movieOverview(isFlag = false) {
 
         btnPay.addEventListener("click", function (e) {
           e.preventDefault();
-          if (
-            (cardNumber.value.length === 16 &&
-              expDate.value != "" &&
-              cvv.value.length === 3) ||
-            upi.vlaue !== ""
-          ) {
+          console.log('hi')
+          if ((cardNumber.value !== "" && expDate.value !== "" && cvv.value !== "") || upi.value!=="") {
             var minm = 100000;
-			      var maxm = 999999;
-            thank_greet.textContent = `Booking Sucessfull ! Enjoy  your movie with Booking Id : BK${ Math.floor(Math
-              .random() * (maxm - minm + 1)) + minm}`;
+            var maxm = 999999;
+            thank_greet.textContent = `Booking Sucessfull ! Enjoy  your movie with Booking Id : BK${
+              Math.floor(Math.random() * (maxm - minm + 1)) + minm
+            }`;
             thank_greet.style.opacity = 1;
-            alert(`Booking Successfull! Scroll down to check your booking id!`)
-            // setTimeout(() => {
-            //   window.location.href = "index.html";
-            // }, 10000);
-          }
+            alert(`Booking Successfull! Scroll down to check your booking id!`);
+ 
+            setTimeout(() => {
+              window.location.href = "index.html";
+            }, 9000);
+           }else{
+            alert(`Please fill out the payment details!!`);
+           }
         });
       });
     });
@@ -368,12 +377,34 @@ function movieOverview(isFlag = false) {
   });
 }
 
-//implementing the search functionality...
+/*..........implementing the search function........*/
+
+function loadSearchMovie(selectedGenre) {
+  listOfMovies.innerHTML = "";
+  selectedGenre.forEach((res) => {
+    const markUp = `
+    <div class="movie">
+    <img class="poster" src="${imgUrl}${res.poster}" alt="${res.title}"/>
+    <h4 class="title">${res.title}</h4>
+    <span class="lang">${res.language.toUpperCase()}</span>
+    <span class="rating">&star; ${parseFloat(res.rating).toFixed(1)}</span>
+  </div>
+    `;
+
+    listOfMovies.insertAdjacentHTML("beforeend", markUp);
+  });
+
+  changeRatingColor();
+  const searchID = selectedGenre.map((el, ind) => el.id);
+  movieDetail(searchID, true);
+  movieOverview();
+}
 
 function searchMovies() {
   var selectedGenre = [];
 
   const searchTerm = searchInp.value;
+  //console.log(searchTerm);
   if (searchTerm === "") {
     return;
   }
@@ -382,14 +413,8 @@ function searchMovies() {
       return ele.id;
     }
   });
-  listOfMovies.innerHTML = "";
-  selectedGenre.forEach((ele) => {
-    // console.log(ele.id);
-    movieData(nowPlaying_url, ele.id, true);
-  });
+  loadSearchMovie(selectedGenre);
 }
-
-/*..........implementing the search function........*/
 
 searchInp.addEventListener("input", function (e) {
   if (searchInp.value === "") {
@@ -403,37 +428,33 @@ searchInp.addEventListener("input", function (e) {
 
 let genre = document.querySelectorAll(".genre");
 
-let genreArr = [];
-// console.log(genre)
 async function getMovieGenre(genreName) {
-  try{
-  const res = await fetch(
-    "https://api.themoviedb.org/3/genre/movie/list?api_key=0ccf59483fedbdb430d11f784efcd6a0"
-  );
-  const data = await res.json();
+  try {
+    const res = await fetch(
+      "https://api.themoviedb.org/3/genre/movie/list?api_key=0ccf59483fedbdb430d11f784efcd6a0"
+    );
+    const data = await res.json();
 
-
-  data.genres.forEach((ele) => {
-    if (ele.name.includes(genreName)) {
-      //console.log(ele.id);
-      movieData(nowPlaying_url, ele.id, true);
-    }
-  });
- }catch(err){
-  console.error(err);
- }
+    data.genres.forEach((ele) => {
+      if (ele.name.includes(genreName)) {
+        //console.log(ele.id);
+        movieData(nowPlaying_url, ele.id, true);
+      }
+    });
+  } catch (err) {
+    console.error(err);
+  }
 }
-getMovieGenre();
 
 genre.forEach((ele) => {
   ele.addEventListener("click", function (e) {
-    console.log(ele.textContent);
+    // console.log(ele.textContent);
     getMovieGenre(ele.textContent);
   });
 });
 
-
 /*.......implementing the logIn functionality......... */
+
 let btnSign = document.getElementById("btn");
 btnSign.addEventListener("click", function () {
   window.location.href = "LogIn.html";

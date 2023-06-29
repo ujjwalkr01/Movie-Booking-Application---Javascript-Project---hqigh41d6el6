@@ -46,9 +46,9 @@ btn_signup.addEventListener("click", function () {
     p.textContent = "✅Account created successfull !";
     signupForm.append(p);
     console.log(this.fstname);
-    setTimeout(()=>{
-      window.location.assign("index.html");
-    },3000);
+    // setTimeout(()=>{
+    //   window.location.assign("index.html");
+    // },3000);
   }
 });
 
@@ -58,7 +58,12 @@ const displayMessage = function (message) {
   loginForm.append(p);
 };
 let isvalid = false;
-let isFlag=false;
+
+let check=JSON.parse(localStorage.getItem("loginStatus"));
+if(check==null){
+  check=[];
+}
+let status;
 btn_login.addEventListener("click", function () {
   for (let i = 0; i < arr.length; i++) {
     if (
@@ -66,17 +71,23 @@ btn_login.addEventListener("click", function () {
       loginpass.value === arr[i].paswrd
     ) {
       isvalid = true;
+      check=[];
+      status='successfull';
+      check.push(status,true,arr[i].fstname);
+      localStorage.setItem('loginStatus', JSON.stringify(check));
       displayMessage(`Welcome back, ${arr[i].fstname}!`);
       setTimeout(() => {
-         isFlag=true;
-         console.log(isFlag);
         window.location.assign("index.html");
       }, 5000);
     }
   }
   if (!isvalid) {
     displayMessage("❌ Invalid username or password");
+      check=[];
+      status='unsuccessfull';
+      localStorage.removeItem('loginStatus', JSON.stringify(check));
+      check.push(status,false);
+      localStorage.setItem('loginStatus', JSON.stringify(check));
   }
 });
-// console.log(isFlag)
-//export {isFlag};
+console.log(JSON.parse(localStorage.getItem("loginStatus")));

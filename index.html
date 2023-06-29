@@ -41,6 +41,7 @@
           <p class="genre">Comedy</p>
           <p class="genre">Mystery</p>
           <p class="genre">Romance</p>
+          <p class="genre">Fantasy</p>
           <p class="genre">TV Movie</p>
         </div>
       </div>
@@ -86,7 +87,14 @@
       <div id="parent--container" class="">
         <!-- container -->
         <div id="mainContainer">
-          <h1 class="hdng">Now Playing...</h1>
+          <!-- <div> -->
+           <h1 class="hdng">Now Playing...</h1>
+           <!-- <label class="switch">
+            <input class="inputCheck" type="checkbox">
+            <span class="slider round"></span>
+          </label>
+           <button id="popular">Popular</button>
+          </div> -->
           <div class="rows"></div>
         </div>
       </div>
@@ -202,22 +210,8 @@
 
     <div id="movieOverview" class="overview-window hidden">
       <button class="btn--close-modal">&times;</button>
-      <div id="window">
-        <!-- <div>
-        <img src="" alt="">
-        <p>Movie poster</p>
-      </div>
-        <div class="movieOverview">
-          <p>movie name</p>
-          <p>rating</p>
-          <p>language</p>
-          <p>duration <span>genre</span></p>
-          <p>movie overview</p>
-          <p>price</p>
-          <button type="submit">Book Tickets</button>
-        </div> -->
-      </div>
+      <div id="window"></div>
     </div>
   </body>
 </html>
-<script src="App.js"></script>
+<script type="module" src="App.js"></script>
