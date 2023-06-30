@@ -26,7 +26,7 @@ main {
   overflow: hidden;
   display: flex;
   background-color: #333;
-  width: 55%;
+  width: 50%;
   height: 80%;
 }
 
@@ -46,7 +46,7 @@ main {
 .signInForm > input,
 .logInForm > input,
 button {
-  margin-bottom: 1.2rem;
+  margin-bottom: 5%;
 }
 .logInForm> h1{
   margin-bottom: 12%;
@@ -55,7 +55,7 @@ button {
 .signInForm > input,
 .logInForm > input {
   width: 100%;
-  height: 35px;
+  height: 7%;
   border: none;
   border-radius: 30px;
   padding-left: 1rem;
@@ -77,22 +77,18 @@ button {
   background: none;
   border: none;
   font-family: inherit;
-  font-size: 18px;
+  font-size: 17px;
   text-transform: uppercase;
   cursor: pointer;
   font-weight: bold;
-  /* transition: all 0.2s; */
-
   background-color: rgba(255, 255, 255, 0.6);
-  /* backdrop-filter: blur(10px); */
-
-  padding: 0.7rem 1.5rem;
+  padding: 2% 5%;
   border-radius: 50rem;
 }
 .hidden {
   opacity: 0;
 }
-@media screen and (max-width:480px){
+@media screen and (min-width: 300px) and (max-width:480px){
   .logInForm {
     width: 50%;    
     text-align: center;
@@ -100,11 +96,24 @@ button {
   }
   main{
     width: 90%;
-     height: 60%;
+     height: 40%;
    } 
-
+   .signInForm > h1,.logInForm > h1{
+    font-size: 15px ;
+   }
+   .btn_signup,
+.btn_login,.login,.signUp{
+  font-size: 10px;
 }
-@media screen and (min-width: 481px) and (max-width: 1180px) {
+.signInForm > h3,.logInForm > h3{
+  font-size: 15px;
+}
+.signInForm > input,
+.logInForm > input{
+  font-size: 10px;
+}
+}
+/* @media screen and (min-width: 481px) and (max-width: 768px) {
   .logInForm {
     width: 50%;    
     text-align: center;
@@ -114,4 +123,41 @@ button {
     width: 85%;
      height: 50%;
    } 
+   .signInForm > input,
+.logInForm > input {
+  width: 100%;
+  height: 7%;
+  border: none;
+  border-radius: 30px;
+  padding-left: 1rem;
+  font-size: 1rem;
+}
+} */
+@media screen and (min-width: 769px) and (max-width: 1115px) {
+  .logInForm {
+    width: 50%;    
+    text-align: center;
+    transition: all 0.75s;
+  }
+  main{
+    width: 85%;
+     height: 40%;
+   } 
+   .signInForm > input,
+.logInForm > input {
+  width: 100%;
+  height: 7.5%;
+  font-size: 21px;
+}
+.signInForm > h1,.logInForm > h1{
+  font-size: 32px ;
+ }
+ .btn_signup,
+.btn_login,.login,.signUp{
+font-size: 22px;
+}
+.signInForm > h3,.logInForm > h3{
+font-size: 28px;
+}
+
 }
