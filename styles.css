@@ -16,13 +16,13 @@ body {
 #logo {
   margin-left: 2rem;
   cursor: pointer;
-  height: 75px;
-  width: 120px;
+  height: 70px;
+  width: 110px;
 }
 #navbar a {
   color: rgb(240, 116, 116);
   font-family: inherit;
-  margin-left: 2rem;
+  margin-left: 1rem;
   font-size: 1.2rem;
   text-decoration: none;
 }
@@ -32,11 +32,11 @@ body {
   font-size: 1.2rem;
   border-radius: 4px;
   border: none;
-  margin-left: 4rem;
+  margin-left: 2rem;
   padding: 0 1rem;
 }
 
-#btn {
+#btn,#logoutbtn {
   height: 2.5rem;
   width: 6rem;
   border-radius: 4px;
@@ -45,9 +45,26 @@ body {
   border: none;
   background-color: rgb(243, 80, 80);
   color: #fff;
-  /* margin-left: 14rem; */
+  /* margin-right: 15%; */
   cursor: pointer;
 }
+#btn:hover,#logoutbtn:hover{
+  transform: scale(1.05);
+  border: 1px solid #cecccc;
+
+}
+#userInfo{
+  position: absolute;
+  top: 0;
+  left:87%;
+  margin-top: 0.8%;
+  color: #88B04B;
+  font-family: inherit;
+  font-weight: bold;  
+}
+
+
+/* css for the Genre */
 #p-container {
   display: flex;
   flex-direction: row;
@@ -147,7 +164,7 @@ body {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
     rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   padding: 5px;
-  /* text-align: center; */
+
 }
 .rows > div > h4 {
   margin-top: 10px;
@@ -186,6 +203,12 @@ body {
   .moviedetails {
     display: none;
   }
+  #userInfo{
+    position: absolute;
+    top: 0;
+    left:62%;
+    margin-top: 0.8%; 
+  }
 }
 
 /* Footer Section */
@@ -202,21 +225,7 @@ footer {
   padding: 1rem;
   font-size: 1.2rem;
 }
-#first_sec > button {
-  margin-top: 0.5rem;
-  margin-right: 5rem;
-  height: 4rem;
-  padding: 0.5rem 2rem;
-  font-size: 1.2rem;
-  border-radius: 4px;
-  border: none;
-  background-color: rgb(243, 80, 80);
-  color: #d6d5d5;
-}
-#first_sec > button:hover {
-  cursor: pointer;
-  color: #fff;
-}
+
 #first_sec > p {
   margin-left: 5rem;
 }
@@ -313,12 +322,12 @@ footer {
 }
 #poster p {
   text-align: center;
-  color: rgb(121, 202, 29);
+  color: #616247;
   font-weight: bold;
 }
 
 .moviedetails h2 {
-  color: orangered;
+  color: #009B77;
 }
 .moviedetails .rating {
   font-family: inherit;
@@ -336,7 +345,7 @@ footer {
 }
 #bookTicketbtn {
   border: none;
-  background-color: rgb(243, 80, 80);
+  background: linear-gradient(to bottom left, #3399ff 0%, #ff0000 100%);
   padding: 12px;
   font-weight: bold;
   font-size: 18px;
@@ -403,11 +412,10 @@ footer {
   font-family: inherit;
   font-size: 3.5rem;
   position: absolute;
-  /* top: .5rem; */
   right: 1.6rem;
 }
 
-/* checkout payment */
+/* checkout payment css */
 
 .payment-main-container {
   display: flex;
@@ -478,8 +486,6 @@ input[type="number"],
   width: 70%;
   margin: auto;
   border-radius: 6px;
-  /* display: flex;
-    flex-wrap: wrap; */
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
     rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   color: #ccc;
@@ -489,16 +495,15 @@ input[type="number"],
   flex: 1 1 300px;
 }
 #form1 > :nth-child(3) > span {
-  /* font-size: 2rem; */
-  color: rgb(24, 139, 24);
+  color: #558d2d;
   margin-left: 70%;
 }
 #form1 > :nth-child(5) > span {
-  color: rgb(24, 139, 24);
+  color: #558d2d;
   margin-left: 61%;
 }
 #form1 > :nth-child(7) > span {
-  color: rgb(24, 139, 24);
+  color: #558d2d;
   margin-left: 73%;
 }
 #noOfTicket {
@@ -534,8 +539,8 @@ input[type="number"],
   }
 }
 #btnBack {
-  background-color: rgb(253, 119, 119);
-  border-radius: 4px;
+  background: linear-gradient(to top right, #ff0066 0%, #ffcc66 100%);
+  border-radius: 2px;
   border: none;
   padding: 10px 15px;
   font-size: 15px;

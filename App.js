@@ -30,12 +30,6 @@ const nowPlaying_url =
 const movieDetailsUrl =
   "https://api.themoviedb.org/3/movie/385687?api_key=0ccf59483fedbdb430d11f784efcd6a0";
 
-const moviesInThetor =
-  "/discover/movie?primary_release_date.gte=2022-11-01&primary_release_date.lte=2023-03-30&";
-
-const API_URL = baseUrl1 + moviesInThetor + API;
-const SEARCH_URL = baseUrl1 + "/search/movie?" + API;
-
 let listOfMovies = document.querySelector(".rows");
 
 /*.... fetching the data from the api...*/
@@ -186,7 +180,7 @@ async function movieDetail(idArr, isFlag = false) {
 
 /*....implementing the movie description.....*/
 
-const overview = document.querySelector(".overview-window");
+let overview = document.querySelector(".overview-window");
 const windowDiv = document.querySelector("#window");
 const btnClose = document.querySelector(".btn--close-modal");
 const body = document.querySelector("body");
@@ -197,185 +191,6 @@ let main = document.getElementById("mainContainer");
 let searchInp = document.getElementById("searchBox");
 let searchBtn = document.getElementById("searchBtn");
 let onPaymentPage = false;
-
-function movieOverview(isFlag = false) {
-  let movielist = document.querySelectorAll(".movie");
-  // console.log(isFlag);
-
-  /*.... implementing the movie model window....*/
-
-  movielist.forEach((list, ind) => {
-    list.addEventListener("click", function (e) {
-      let price = Math.trunc(Math.random() * (300 - 250 + 1)) + 250;
-      let poster = list.querySelector(".poster");
-      let title = list.querySelector(".title");
-      //console.log(title.textContent);
-      let lang = list.querySelector(".lang");
-      let rating = list.querySelector(".rating");
-      // console.log();
-      const markUp = `
-       <div id="poster">
-         <img src="${poster.getAttribute("src")}" alt="${title.textContent}" >
-         <p>₹ ${price}</p>
-         <button id="bookTicketbtn" type="submit">Book Tickets</button>
-       </div>
-      <div class="moviedetails">
-        <h2>${title.textContent}</h2>
-        <p class="rating">${rating.textContent} /10</p>
-        <p>${lang.textContent}</p>
-        <p>${
-          isFlag ? newArray[ind].duration : arr[ind].duration
-        } minutes <span>&bull;</span> <span>${
-        isFlag ? newArray[ind].genre : arr[ind].genre
-      }</span></p>
-        <p>${isFlag ? newArray[ind].overview : arr[ind].overview}</p>        
-        
-      </div>
-      
-      `;
-      windowDiv.innerHTML = markUp;
-      overview.classList.remove("hidden");
-
-      changeRatingColor();
-      const btnBook = document.querySelector("#bookTicketbtn");
-
-      //proceeding to the checkout page...
-      btnBook.addEventListener("click", () => {
-        parentDiv.classList.add("hidden");
-        overview.classList.add("hidden");
-        offerBar.classList.add("hidden");
-        searchInp.classList.add("hidden");
-        let convFee = parseFloat(((price * 1.75) / 100).toFixed(2));
-
-        const payment = `
-       <div id="paymentSection" class="">
-          <button type="submit" id="btnBack">Back</button>
-          <div id="container">
-          <div id="form1">
-            <h1>Billing Details</h1>
-            <h2 style="color: orangered">${title.textContent}</h2>
-            <p>
-              Classic Ticket
-              <span id="perTickt">₹ ${price}</span>
-            </p>
-            <p for="noOfTicket">Number of tickets
-            <input type="number" id="noOfTicket" value="1" /></p>
-            <p>
-              Convenience Fee(1.75%)<span  id="feePrice"
-                >price</span
-              >
-            </p>
-            <hr />
-            <p>
-              Sub total<span id="totalamnt">price</span>
-            </p>
-          </div>
-      </div>
-  
-  
-      <hr style="width: 70%; margin: auto; margin-top: 20px;">
-      <div class="payment-main-container">
-  
-          <div class="payment-container">
-              <h2>Credit/Debit Card</h2>
-              <form id="payment-form">
-                  <label for="card-number">Card Number:</label>
-                  <input type="number" id="card-number" name="card-number" placeholder="Enter 16 digit card number" required>
-  
-                  <label for="expiration-date">Expiration Date:</label>
-                  <input type="date" id="expiration-date" name="expiration-date" required>
-  
-                  <label for="cvv">CVV:</label>
-                  <input type="text" id="cvv" name="cvv" placeholder="Enter 3 digit cvv number" required>
-                  <h2>UPI</h2>
-                  <label for="upi">Upi Id </label>
-                  <input type="text" id="upi" name="upi" placeholder="Enter the Upi number">
-  
-                  <input class="check" style="margin-top: 10px;" type="checkbox" required>
-                  <span>Please read <span style="color: blue;  text-decoration: underline;">terms and condition</span>
-                  </span>
-  
-                  <button id="payBtn" type="submit">Pay Now</button>
-              </form>
-          </div>
-  
-          <div class="payment-container">
-              <img id="pay_image" src="http://clipart-library.com/img1/1247294.png" alt="">
-          </div>
-  
-      </div>
-      <h2 id="thank">Booking Sucessfull ! Thanks you your Booking Id : BK256411126</h2>
-  
-      <hr style="height: 0rem; background-color: rgb(77, 76, 76); ">
-      </div>  
-        `;
-        mainDiv.innerHTML = payment;
-
-        /*...implementing the tax...*/
-
-        let ticketInput = document.getElementById("noOfTicket");
-        let cnvFee = document.getElementById("feePrice");
-        let totalamnt = document.getElementById("totalamnt");
-        let perTicktPrice = document.getElementById("perTickt");
-        totalamnt.textContent = `₹ ${price + Number(convFee)} `;
-        cnvFee.textContent = "₹ " + convFee;
-
-        function calculatingTheTax(notickt) {
-          let taxCal = parseFloat((convFee * notickt).toFixed(2));
-          let ticketPrice = price * notickt;
-          perTicktPrice.textContent = "₹ " + ticketPrice;
-          cnvFee.textContent = "₹ " + taxCal;
-          totalamnt.textContent = `₹ ${ticketPrice + taxCal} `;
-        }
-        noOfTicket.addEventListener("input", function (e) {
-          let notickt = parseInt(ticketInput.value);
-          calculatingTheTax(notickt);
-
-          if (noOfTicket.value === "" || noOfTicket.value == 0) {
-            calculatingTheTax(1);
-          }
-        });
-
-        /*.....Implementing the  back button functionality....*/
-
-        let backBtn = document.getElementById("btnBack");
-        let paymentSect = document.getElementById("paymentSection");
-        backBtn.addEventListener("click", function () {
-          window.location.href = "index.html";
-        });
-        let cardNumber = document.getElementById("card-number");
-        let expDate = document.getElementById("expiration-date");
-        let cvv = document.getElementById("cvv");
-        let upi = document.getElementById("upi");
-        let btnPay = document.getElementById("payBtn");
-        let thank_greet = document.getElementById("thank");
-
-        btnPay.addEventListener("click", function (e) {
-          e.preventDefault();
-          console.log('hi')
-          if ((cardNumber.value !== "" && expDate.value !== "" && cvv.value !== "") || upi.value!=="") {
-            var minm = 100000;
-            var maxm = 999999;
-            thank_greet.textContent = `Booking Sucessfull ! Enjoy  your movie with Booking Id : BK${
-              Math.floor(Math.random() * (maxm - minm + 1)) + minm
-            }`;
-            thank_greet.style.opacity = 1;
-            alert(`Booking Successfull! Scroll down to check your booking id!`);
- 
-            setTimeout(() => {
-              window.location.href = "index.html";
-            }, 9000);
-           }else{
-            alert(`Please fill out the payment details!!`);
-           }
-        });
-      });
-    });
-  });
-  btnClose.addEventListener("click", function () {
-    overview.classList.add("hidden");
-  });
-}
 
 /*..........implementing the search function........*/
 
@@ -456,6 +271,224 @@ genre.forEach((ele) => {
 /*.......implementing the logIn functionality......... */
 
 let btnSign = document.getElementById("btn");
+let userInfo = document.getElementById("userInfo");
+
 btnSign.addEventListener("click", function () {
   window.location.href = "LogIn.html";
+});
+
+var logInStatus = JSON.parse(localStorage.getItem("loginStatus"));
+
+const LogOutbtn = `<button  id="logoutbtn" type="submit">Log out</button>`;
+
+let navDiv = document.getElementById("navDiv");
+
+if (logInStatus[0] === "success") {
+  btnSign.remove();
+
+  userInfo.textContent = `Welcome ${logInStatus[2]
+    .charAt(0)
+    .toUpperCase()}${logInStatus[2].slice(1)}`;
+  navDiv.insertAdjacentHTML("beforeend", LogOutbtn);
+}
+
+let btnLogOut = document.getElementById("logoutbtn");
+btnLogOut.addEventListener("click", (e) => {
+  userInfo.classList.add("hidden");
+  localStorage.removeItem("loginStatus");
+  window.location.href = "index.html";
+});
+
+/*.... implementing the movie model window....*/
+
+function movieOverview(isFlag = false) {
+  let movielist = document.querySelectorAll(".movie");
+  if (logInStatus === null) {
+    movielist.forEach((list) => {
+      list.addEventListener("click", (e) => {
+        alert("Welcome! Please Login/Signup to access your account and continue using our application.");
+      });
+    });
+  } else {
+    movielist.forEach((list, ind) => {
+      list.addEventListener("click", function (e) {
+        let price = Math.trunc(Math.random() * (300 - 250 + 1)) + 250;
+        let poster = list.querySelector(".poster");
+        let title = list.querySelector(".title");
+        //console.log(title.textContent);
+        let lang = list.querySelector(".lang");
+        let rating = list.querySelector(".rating");
+        // console.log();
+        const markUp = `
+       <div id="poster">
+         <img src="${poster.getAttribute("src")}" alt="${title.textContent}" >
+         <p>₹ ${price}</p>
+         <button id="bookTicketbtn" type="submit">Book Tickets</button>
+       </div>
+      <div class="moviedetails">
+        <h2>${title.textContent}</h2>
+        <p class="rating">${rating.textContent} /10</p>
+        <p>${lang.textContent}</p>
+        <p>${
+          isFlag ? newArray[ind].duration : arr[ind].duration
+        } minutes <span>&bull;</span> <span>${
+          isFlag ? newArray[ind].genre : arr[ind].genre
+        }</span></p>
+        <p>${isFlag ? newArray[ind].overview : arr[ind].overview}</p>        
+        
+      </div>
+      
+      `;
+        windowDiv.innerHTML = markUp;
+
+        overview.classList.remove("hidden");
+
+        changeRatingColor();
+        let btnBook = document.querySelector("#bookTicketbtn");
+
+        /*...proceeding to the checkout page...*/
+
+        btnBook.addEventListener("click", () => {
+          parentDiv.classList.add("hidden");
+          overview.classList.add("hidden");
+          offerBar.classList.add("hidden");
+          searchInp.classList.add("hidden");
+          let convFee = parseFloat(((price * 1.75) / 100).toFixed(2));
+
+          const payment = `
+       <div id="paymentSection" class="">
+          <button type="submit" id="btnBack">Back</button>
+          <div id="container">
+          <div id="form1">
+            <h1>Billing Details</h1>
+            <h2 style="color: #009B77">${title.textContent}</h2>
+            <p>
+              Classic Ticket
+              <span id="perTickt">₹ ${price}</span>
+            </p>
+            <p for="noOfTicket">Number of tickets
+            <input type="number" id="noOfTicket" value="1" /></p>
+            <p>
+              Convenience Fee(1.75%)<span  id="feePrice"
+                >price</span
+              >
+            </p>
+            <hr />
+            <p>
+              Sub total<span id="totalamnt">price</span>
+            </p>
+          </div>
+      </div>
+  
+  
+      <hr style="width: 70%; margin: auto; margin-top: 20px;">
+      <div class="payment-main-container">
+  
+          <div class="payment-container">
+              <h2>Credit/Debit Card</h2>
+              <form id="payment-form">
+                  <label for="card-number">Card Number:</label>
+                  <input type="number" id="card-number" name="card-number" placeholder="Enter 16 digit card number" required>
+  
+                  <label for="expiration-date">Expiration Date:</label>
+                  <input type="date" id="expiration-date" name="expiration-date" required>
+  
+                  <label for="cvv">CVV:</label>
+                  <input type="text" id="cvv" name="cvv" placeholder="Enter 3 digit cvv number" required>
+                  <h2>UPI</h2>
+                  <label for="upi">Upi Id </label>
+                  <input type="text" id="upi" name="upi" placeholder="Enter the Upi number">
+  
+                  <input class="check" style="margin-top: 10px;" type="checkbox" required>
+                  <span>Please read <span style="color: blue;  text-decoration: underline;">terms and condition</span>
+                  </span>
+  
+                  <button id="payBtn" type="submit">Pay Now</button>
+              </form>
+          </div>
+  
+          <div class="payment-container">
+              <img id="pay_image" src="http://clipart-library.com/img1/1247294.png" alt="">
+          </div>
+  
+      </div>
+      <h2 id="thank">Booking Sucessfull ! Thanks you your Booking Id : BK256411126</h2>
+  
+      <hr style="height: 0rem; background-color: rgb(77, 76, 76); ">
+      </div>  
+        `;
+          mainDiv.innerHTML = payment;
+
+          /*...implementing the tax...*/
+
+          let ticketInput = document.getElementById("noOfTicket");
+          let cnvFee = document.getElementById("feePrice");
+          let totalamnt = document.getElementById("totalamnt");
+          let perTicktPrice = document.getElementById("perTickt");
+          totalamnt.textContent = `₹ ${price + Number(convFee)} `;
+          cnvFee.textContent = "₹ " + convFee;
+
+          function calculatingTheTax(notickt) {
+            let taxCal = parseFloat((convFee * notickt).toFixed(2));
+            let ticketPrice = price * notickt;
+            perTicktPrice.textContent = "₹ " + ticketPrice;
+            cnvFee.textContent = "₹ " + taxCal;
+            totalamnt.textContent = `₹ ${ticketPrice + taxCal} `;
+          }
+          noOfTicket.addEventListener("input", function (e) {
+            let notickt = parseInt(ticketInput.value);
+            calculatingTheTax(notickt);
+
+            if (noOfTicket.value === "" || noOfTicket.value == 0) {
+              calculatingTheTax(1);
+            }
+          });
+
+          /*.....Implementing the  back button functionality....*/
+
+          let backBtn = document.getElementById("btnBack");
+          let paymentSect = document.getElementById("paymentSection");
+          backBtn.addEventListener("click", function () {
+            window.location.href = "index.html";
+          });
+          let cardNumber = document.getElementById("card-number");
+          let expDate = document.getElementById("expiration-date");
+          let cvv = document.getElementById("cvv");
+          let upi = document.getElementById("upi");
+          let btnPay = document.getElementById("payBtn");
+          let thank_greet = document.getElementById("thank");
+
+          btnPay.addEventListener("click", function (e) {
+            e.preventDefault();
+            console.log("hi");
+            if (
+              (cardNumber.value !== "" &&
+                expDate.value !== "" &&
+                cvv.value !== "") ||
+              upi.value !== ""
+            ) {
+              var minm = 100000;
+              var maxm = 999999;
+              thank_greet.textContent = `Booking Sucessfull ! Enjoy  your movie with Booking Id : BK${
+                Math.floor(Math.random() * (maxm - minm + 1)) + minm
+              }`;
+              thank_greet.style.opacity = 1;
+              alert(
+                `Booking Successfull! Scroll down to check your booking id!`
+              );
+
+              setTimeout(() => {
+                window.location.href = "index.html";
+              }, 9000);
+            } else {
+              alert(`Please fill out the payment details!!`);
+            }
+          });
+        });
+      });
+    });
+  }
+}
+btnClose.addEventListener("click", function () {
+  overview.classList.add("hidden");
 });

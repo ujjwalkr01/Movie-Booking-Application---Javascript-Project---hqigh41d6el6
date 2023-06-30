@@ -64,6 +64,7 @@ if(check==null){
   check=[];
 }
 let status;
+
 btn_login.addEventListener("click", function () {
   for (let i = 0; i < arr.length; i++) {
     if (
@@ -72,22 +73,22 @@ btn_login.addEventListener("click", function () {
     ) {
       isvalid = true;
       check=[];
-      status='successfull';
+      status='success';
       check.push(status,true,arr[i].fstname);
       localStorage.setItem('loginStatus', JSON.stringify(check));
       displayMessage(`Welcome back, ${arr[i].fstname}!`);
       setTimeout(() => {
         window.location.assign("index.html");
-      }, 5000);
+      }, 4000);
     }
   }
   if (!isvalid) {
     displayMessage("❌ Invalid username or password");
       check=[];
-      status='unsuccessfull';
+      status='unsuccess';
       localStorage.removeItem('loginStatus', JSON.stringify(check));
       check.push(status,false);
       localStorage.setItem('loginStatus', JSON.stringify(check));
   }
 });
-console.log(JSON.parse(localStorage.getItem("loginStatus")));
+
