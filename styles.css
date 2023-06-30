@@ -370,7 +370,7 @@ footer {
   transform: translate(-50%, -50%);
   box-shadow: 0 4rem 6rem #00000040;
 }
-@media screen and (min-width: 481px) and (max-width: 1055px) {
+@media screen and (min-width: 481px) and (max-width: 1180px) {
   .rows {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -397,6 +397,15 @@ footer {
 
   #navDiv a {
     margin-left: 0;
+  }
+  #userInfo{
+    position: absolute;
+    top: 0;
+    left:79%;
+    margin-top: 0.8%; 
+  }
+  #logoutbtn{
+    margin-right: 3%;
   }
 }
 
