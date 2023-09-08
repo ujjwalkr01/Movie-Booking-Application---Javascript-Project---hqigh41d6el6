@@ -36,9 +36,6 @@ let listOfMovies = document.querySelector(".rows");
 
 let countofFlag = 0;
 function loadingMovie(data, id = 0, isFlag = false) {
-  // console.log(data.results.length);
-  // console.log(data.results[0].id);
-
   if (isFlag && countofFlag === 0) {
     countofFlag++;
     listOfMovies.innerHTML = "";
@@ -306,7 +303,9 @@ function movieOverview(isFlag = false) {
   if (logInStatus === null) {
     movielist.forEach((list) => {
       list.addEventListener("click", (e) => {
-        alert("Welcome! Please Login/Signup to access your account and continue using our application.");
+        alert(
+          "Welcome! Please Login/Signup to access your account and continue using our application."
+        );
       });
     });
   } else {
@@ -386,15 +385,15 @@ function movieOverview(isFlag = false) {
   
           <div class="payment-container">
               <h2>Credit/Debit Card</h2>
-              <form id="payment-form">
+              <form id="payment-form" action="" method="get">
                   <label for="card-number">Card Number:</label>
-                  <input type="number" id="card-number" name="card-number" placeholder="Enter 16 digit card number" required>
+                  <input type="tel" id="card-number" name="card-number" placeholder="Enter 16 digit card number" maxlength="16" required>
   
                   <label for="expiration-date">Expiration Date:</label>
                   <input type="date" id="expiration-date" name="expiration-date" required>
   
                   <label for="cvv">CVV:</label>
-                  <input type="text" id="cvv" name="cvv" placeholder="Enter 3 digit cvv number" required>
+                  <input type="tel" id="cvv" name="cvv" placeholder="Enter 3 digit cvv number" maxlength="3" required>
                   <h2>UPI</h2>
                   <label for="upi">Upi Id </label>
                   <input type="text" id="upi" name="upi" placeholder="Enter the Upi number">

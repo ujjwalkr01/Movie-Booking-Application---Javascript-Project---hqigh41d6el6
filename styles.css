@@ -391,7 +391,7 @@ label {
   margin-top: 10px;
 }
 
-input[type="number"],
+input[type="tel"],
 #upi,
 #expiration-date,
 #cvv {
