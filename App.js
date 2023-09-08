@@ -387,13 +387,13 @@ function movieOverview(isFlag = false) {
               <h2>Credit/Debit Card</h2>
               <form id="payment-form" action="" method="get">
                   <label for="card-number">Card Number:</label>
-                  <input type="tel" id="card-number" name="card-number" placeholder="Enter 16 digit card number" maxlength="16" required>
+                  <input type="number" id="card-number" name="card-number" placeholder="Enter 16 digit card number" min="16" onKeyPress="if(this.value.length==16) return false" required>
   
                   <label for="expiration-date">Expiration Date:</label>
                   <input type="date" id="expiration-date" name="expiration-date" required>
   
                   <label for="cvv">CVV:</label>
-                  <input type="tel" id="cvv" name="cvv" placeholder="Enter 3 digit cvv number" maxlength="3" required>
+                  <input type="number" id="cvv" name="cvv" placeholder="Enter 3 digit cvv number" min="3" onKeyPress="if(this.value.length==3) return false" required>
                   <h2>UPI</h2>
                   <label for="upi">Upi Id </label>
                   <input type="text" id="upi" name="upi" placeholder="Enter the Upi number">
@@ -459,11 +459,13 @@ function movieOverview(isFlag = false) {
 
           btnPay.addEventListener("click", function (e) {
             e.preventDefault();
-            console.log("hi");
+            // console.log("hi");
             if (
               (cardNumber.value !== "" &&
+                cardNumber.value.length === 16 &&
                 expDate.value !== "" &&
-                cvv.value !== "") ||
+                cvv.value !== "" &&
+                cvv.value.length === 3) ||
               upi.value !== ""
             ) {
               var minm = 100000;
